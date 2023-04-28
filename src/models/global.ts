@@ -4,16 +4,9 @@ import { useState } from 'react';
 
 
 const useUser = () => {
-  const [userName, setUserName] = useState<string>('');
-  const [userId, setUserId] = useState<number>(0);
-  const [userTel, setUserTel] = useState('');
+  const [user, setUser] = useState({userName: '', userTel: '', userId: 0})
   return {
-    userName,
-    setUserName,
-    userId,
-    setUserId,
-    userTel,
-    setUserTel
+    user, setUser
   };
 };
 

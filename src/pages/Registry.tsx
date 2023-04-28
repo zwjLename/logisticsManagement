@@ -12,8 +12,8 @@ import {
 } from '@ant-design/pro-components';
 import styles from './index.less';
 import { errorNotice, noticeFunc } from '@/utils/format';
-import { baseReq } from '@/services/base';
 import { SUCCESS_CODE } from '@/constants';
+import { request } from '@umijs/max';
 
 
 export default () => {
@@ -23,7 +23,7 @@ export default () => {
             errorNotice({ title: '两次密码不一致' });
             return;
         }
-        const { data, code } = await baseReq({url: '/api/auth/signup', data: { password, username, tel }});
+        const { data, code } = await request('/auth/signup',{ data: { password, username, tel }});
         console.log('%c [ data ]-25', 'font-size:13px; background:pink; color:#bf2c9f;', data)
         if (code === SUCCESS_CODE) {
             noticeFunc('success', {title: '注册成功！去登录'});

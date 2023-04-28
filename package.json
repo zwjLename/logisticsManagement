@@ -1,5 +1,6 @@
 {
   "private": true,
+  "name": "logosticsmanagement",
   "author": "zhuwenjing.pro <zhuwenjing.pro@bytedance.com>",
   "scripts": {
     "dev": "max dev",
@@ -8,14 +9,18 @@
     "prepare": "husky install",
     "postinstall": "max setup",
     "setup": "max setup",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "openapi": "max openapi"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-components": "^2.0.1",
     "@umijs/max": "^4.0.63",
-    "@umijs/plugin-openapi": "^1.3.3",
+    "@umijs/max-plugin-openapi": "^2.0.3",
     "antd": "^5.0.0",
+    "dayjs": "^1.11.7",
+    "moment": "^2.29.4",
+    "query-string": "^8.1.0",
     "store": "^2.0.12"
   },
   "devDependencies": {
@@ -30,6 +35,7 @@
     "prettier-plugin-organize-imports": "^2",
     "prettier-plugin-packagejson": "^2",
     "stylelint": "link:@umijs/max/stylelint",
+    "swagger-ui-dist": "^4.18.2",
     "typescript": "^5.0.0"
   }
 }

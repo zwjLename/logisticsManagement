@@ -1,5 +1,10 @@
 import { defineConfig } from '@umijs/max';
 
+const proxyContent = {
+  'target': 'https://111.229.163.181:8443',
+      'changeOrigin': true,
+      secure: false,
+}
 export default defineConfig({
   antd: {},
   access: {},
@@ -74,19 +79,41 @@ export default defineConfig({
       }]
     },
     {
-        name: ' CRUD 示例',
-        path: '/table',
-        component: './Table',
+        name: '配置',
+        path: '/config',
+        routes: [{
+          path: 'client',
+          name: '客户单位',
+          component: './Config/Client'
+        }, {
+          path: 'member',
+          name: '人员',
+          component: './Config/Member'
+        }, {
+          path: 'vehicle',
+          name: '车辆',
+          component: './Config/Vehicle'
+        }, {
+          path: 'terminal',
+          name: '终端',
+          component: './Config/Client'
+        }]
+        // component: './Table',
     },
   ],
   npmClient: 'pnpm',
   proxy: {
-    '/api': {
-      'target': 'https://111.229.163.181:8443',
-      'changeOrigin': true,
-      'pathRewrite': { '^/api' : '' },
-      secure: false,
-    },
+    '/micro-vehicles-test': proxyContent,
+    '/auth': proxyContent
   },
+  plugins: [require.resolve("@umijs/max-plugin-openapi")],
+  openAPI: {
+    requestLibPath: "import { request } from '@umijs/max'",
+    // 这里使用服务端提供的url
+    schemaPath:
+      "https://111.229.163.181:8443/micro-vehicles-test/v2/api-docs",
+    mock: false,
+  },
+  mock: false
 });
 

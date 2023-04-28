@@ -9,21 +9,29 @@ import {
     ProFormText
 } from '@ant-design/pro-components';
 import styles from './index.less';
-import { baseReq } from '@/services/base';
-import { history, useModel } from '@umijs/max';
+// import { baseReq } from '@/services/base';
+import { history, request, useModel } from '@umijs/max';
 import ls from "store"
 import { System } from '@/constants';
 
 export default () => {
-const {setUserId, setUserName, setUserTel} = useModel('global');
+const {setUser} = useModel('global');
+
    const submit = async (params: {username: string, password: string}) => {
-    const {data = {}} = await baseReq({url: '/api/auth/login', params})
+    const {data = {}} = await request('/auth/login',{params, method: 'POST'})
     console.log('%c [ data ]-18', 'font-size:13px; background:pink; color:#bf2c9f;', data)
     const {username = '', id = 0, token = '', tel = ''} = data;
-    setUserId(id);
-    setUserName(username);
-    setUserTel(tel)
+    setUser({
+        userName: username,
+        userId: id,
+        userTel: tel
+    })
     ls.set(`${System}-token`, token);
+    ls.set(`${System}-user`, {
+        userName: username,
+        userId: id,
+        userTel: tel
+    });
     history.push('/manipulate/purchase')
    }
 
