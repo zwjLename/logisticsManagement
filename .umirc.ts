@@ -19,7 +19,7 @@ export default defineConfig({
     {
       path: '/',
       layout: false,
-      redirect: 'monitor/vehicleMonitor'
+      redirect: 'login'
     },
     {
       path: '/registry',

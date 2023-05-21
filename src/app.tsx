@@ -8,6 +8,7 @@ import { Dropdown } from "antd";
 import { LogoutOutlined } from '@ant-design/icons';
 import ls from "store";
 import { System } from './constants';
+import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from 'react';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
@@ -36,7 +37,7 @@ export const layout: RunTimeLayoutConfig = () => {
       src: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
       size: 'small',
       title: userName,
-      render: (props: any, dom: any) => {
+      render: (_props: any, dom: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined) => {
         return (
           <Dropdown
             menu={{
@@ -53,7 +54,7 @@ export const layout: RunTimeLayoutConfig = () => {
               ],
             }}
           >
-            <>{dom}</>
+            {dom}
           </Dropdown>
         );
       },
