@@ -142,5 +142,5 @@ export const VideoComponent = memo(({ terminalMobile, visible, state }: any) => 
 
         }
     }, [activekey, visible, channelNo, state, dateRange, replayMutiple]);
-    return <><Tabs activeKey={activekey} items={items} onChange={onChange} /><Spin spinning={realRes.loading}><video id="my-video" style={{height: 'auto', width: '100%'}}></video></Spin></>
+    return <><Tabs activeKey={activekey} items={items} onChange={onChange} /><Spin spinning={realRes.loading || replayRes.loading}><video id="my-video" style={{height: 'auto', width: '100%'}}></video></Spin></>
 })
