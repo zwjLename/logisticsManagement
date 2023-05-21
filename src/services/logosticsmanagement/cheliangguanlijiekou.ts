@@ -32,21 +32,6 @@ export async function editVehicleUsingPOST(
   });
 }
 
-/** 获取所有车辆列表 GET /vehicle/getAllVehicleByUser */
-export async function getAllVehicleByUserUsingGET(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getAllVehicleByUserUsingGETParams,
-  options?: { [key: string]: any },
-) {
-  return request<API.ResultListTransportVehicleInfo_>('/vehicle/getAllVehicleByUser', {
-    method: 'GET',
-    params: {
-      ...params,
-    },
-    ...(options || {}),
-  });
-}
-
 /** 分页获取车辆列表 GET /vehicle/getAllVehicleByUserPage */
 export async function getAllVehicleByPageUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
@@ -73,6 +58,21 @@ export async function getAllVehiclesUsingGET(
   options?: { [key: string]: any },
 ) {
   return request<API.ResultListVehicleResult_>('/vehicle/getAllVehiclesByUser', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 根据车牌获取车辆绑定的终端信息。如果车辆没有绑定终端，则返回code为30012提示 GET /vehicle/getBindTerminalInfoByVehicleNum */
+export async function getBindTerminalInfoByVehicleIdUsingGET(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getBindTerminalInfoByVehicleIdUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultString_>('/vehicle/getBindTerminalInfoByVehicleNum', {
     method: 'GET',
     params: {
       ...params,

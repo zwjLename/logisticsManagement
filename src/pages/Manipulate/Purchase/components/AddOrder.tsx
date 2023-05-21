@@ -11,16 +11,18 @@ import { PurchaseType } from '../../typings';
 
 
 interface Props {
-    cb: () => void
+    cb: () => void;
+    setActiveKey: any;
 }
-export const AddOrder = ({ cb }: Props) => {
+export const AddOrder = ({ cb, setActiveKey }: Props) => {
     const { addVisible, setAddVisible, detail, detailVisible, setDetailVisible, activeKey } = useModel('Manipulate.Purchase.index')
 
     const { user } = useModel('global');
     const [form] = Form.useForm()
     const [list, setList] = useState<API.ConsumerAddress[]>([]);
     const [selectItem, setSelectItem] = useState<API.ConsumerAddress>({});
-    const [hopeRcvTime, setHopeRcvTime] = useState('');
+    const [hopeRcvTime, setHopeRcvTime] = useState(dayjs().format(DateFormat));
+    console.log('%c [ dayjs().format(DateFormat) ]-24', 'font-size:13px; background:pink; color:#bf2c9f;', dayjs().format(DateFormat))
     const getClientList = async () => {
         if (user.userId) {
             const listData = await getAllAddressUsingGET({ userId: user.userId });
@@ -46,10 +48,12 @@ export const AddOrder = ({ cb }: Props) => {
         }
         if (!res?.code) {
             noticeFunc('success', { msg: detailVisible ? '编辑订单成功' : '创建订单成功' });
+            setActiveKey(PurchaseType.ing)
             setAddVisible(false)
             cb();
         }
-    }, [selectItem, detail, activeKey, detailVisible])
+    }, [selectItem, detail, activeKey, detailVisible, hopeRcvTime])
+    
     const confirm = async () => {
         await form.validateFields();
         const goods = form.getFieldsValue();
@@ -67,11 +71,9 @@ export const AddOrder = ({ cb }: Props) => {
             const corItem = list.find(ele => ele.corporateName === detail.corporateName) || {};
             setSelectItem(corItem)
             if ((activeKey === PurchaseType.finish) && detailVisible) {
-                // todo 再来一单默认时间加一天
-                setHopeRcvTime(detail.hopeRcvTime)
-            } else {
-
-                setHopeRcvTime(detail.hopeRcvTime)
+                setHopeRcvTime(dayjs().add(1, 'day').format(DateFormat));
+            } else if (detailVisible) {
+                setHopeRcvTime(detail.hopeRcvTime);
             }
         }
 
@@ -88,7 +90,7 @@ export const AddOrder = ({ cb }: Props) => {
 
                 <Col span={4} className='mt10'>送达日期：</Col>
                 <Col span={20} className='mt10'>
-                    <DatePicker value={hopeRcvTime ? dayjs(hopeRcvTime, DateFormat) : dayjs()} format={DateFormat} style={{ width: '100%' }} onChange={(e) => setHopeRcvTime(e?.format(DateFormat) as string)}></DatePicker>
+                    <DatePicker value={dayjs(hopeRcvTime)} format={DateFormat} style={{ width: '100%' }} onChange={(e) => setHopeRcvTime(e?.format(DateFormat) as string)}></DatePicker>
                 </Col>
                 <Col span={4} className='mt10'>商品：</Col>
                 <Col span={20} className='mt10'>

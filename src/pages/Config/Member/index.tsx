@@ -6,6 +6,7 @@ import { AllMember, MemberWord, Member } from './types';
 import { addStaffUsingPOST, deleteStaffUsingDELETE, editStaffUsingPOST, getAllStaffsUsingGET } from "@/services/logosticsmanagement/sijiguanlijiekou";
 import { DateFormat, noticeFunc } from "@/utils/format";
 import dayjs from "dayjs";
+import { addUserUsingPOST } from '@/services/logosticsmanagement/user';
 
 export default function ConfigClient() {
     const [form] = Form.useForm();
@@ -21,10 +22,13 @@ export default function ConfigClient() {
         manual: true,
     });
     const getList = async () => {
-        await memberRes.run({
+        const data = await memberRes.run({
             userId: user?.userId,
             role: activeKey
         });
+        return {
+            data
+        }
     }
     const editFunc = (record: API.DriverInfo) => {
         setEdit(record.id as string)
@@ -72,12 +76,35 @@ export default function ConfigClient() {
         }
     }, [activeKey, user?.userId])
     const submit = async () => {
-        await form.validateFields();
-        setLoading(true)
-        const value = form.getFieldsValue();
-        const func = edit ? editStaffUsingPOST : addStaffUsingPOST;
-        const editId = edit ? { id: edit } : {};
-        await func({ ...value, userId: user.userId, role: activeKey, birthDay: value.birthDay ? dayjs(value.birthDay).format(DateFormat) : undefined, ...editId })
+        try {
+            await form.validateFields();
+            setLoading(true)
+            const value = form.getFieldsValue();
+            const func = edit ? editStaffUsingPOST : addStaffUsingPOST;
+            const editId = edit ? { id: edit } : {};
+            await func({ ...value, userId: user.userId, role: activeKey, birthDay: value.birthDay ? dayjs(value.birthDay).format(DateFormat) : undefined, ...editId });
+            if (activeKey === Member.admin) {
+                await addUserUsingPOST({
+                    userDO: {
+                        "birthDay": "",
+                        "id": 0,
+                        "image": "",
+                        "licenseNum": "",
+                        "register_time": "",
+                        "role": "ROLE_ADMIN",
+                        "sex": "",
+                        "vehicleType": "",
+                        belongUserId: user?.userId,
+                        ...value,
+                        username: value.tel,
+                        password: '123456'
+                    }
+                })
+            }
+        } catch(e){
+
+        }
+        
         setLoading(false);
         setVisible(false);
         getList()
@@ -85,12 +112,13 @@ export default function ConfigClient() {
 
     return <PageContainer tabList={AllMember.map(ele => ({ tab: MemberWord[ele], key: ele }))} onTabChange={(tabkey) => { setActiveKey(tabkey as Member); form.resetFields() }}>
         <ProTable
-        pagination={false}
+            pagination={false}
             loading={memberRes.loading}
             actionRef={actionRef}
             rowKey="id"
             search={false}
             dataSource={memberRes.data || []}
+            request={getList}
             columns={columns}
             toolBarRender={() => [<Button type="primary" key="primary" onClick={() => { setVisible(true) }} loading={loading}>创建</Button>]} />
         <Modal title={edit ? "编辑" : "创建"} open={visible} onCancel={() => setVisible(false)} onOk={submit}>

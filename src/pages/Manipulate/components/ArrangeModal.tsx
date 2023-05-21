@@ -15,7 +15,6 @@ interface Props {
 }
 export const ArrangeModal = ({ open, setOpen, cb, dateName = '', personName = '', personType, title }: Props) => {
     const { user } = useModel('global');
-    console.log('%c [ user ]-18', 'font-size:13px; background:pink; color:#bf2c9f;', user)
     const [personList, setPersonList] = useState<API.DriverInfo[]>([]);
     useEffect(() => {
         const getStaff = async () => {
@@ -32,7 +31,6 @@ export const ArrangeModal = ({ open, setOpen, cb, dateName = '', personName = ''
     const [form] = Form.useForm();
     const onOk = () => {
         const value = form.getFieldsValue();
-        console.log('%c [ value ]-31', 'font-size:13px; background:pink; color:#bf2c9f;', value)
         cb(value)
     }
     return <Modal open={open} title={title} onCancel={() => setOpen(false)} onOk={onOk}>

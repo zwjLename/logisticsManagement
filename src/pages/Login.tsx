@@ -32,7 +32,9 @@ const {setUser} = useModel('global');
         userId: id,
         userTel: tel
     });
-    history.push('/manipulate/purchase')
+    setTimeout(() => {
+        history.push('/manipulate/purchase')
+    }, 0)
    }
 
     return (

@@ -80,6 +80,7 @@ const PurchaseManipulatePage: React.FC = () => {
   return (
     <>
       <PageContainer
+        tabActiveKey={activeKey}
         tabList={[{ tab: '进行中', key: PurchaseType.ing }, { tab: '已完成', key: PurchaseType.finish }]}
         extra={<Button type="primary" onClick={() => { setAddVisible(true); setDetail({}) }}>创建订单</Button>}
         onTabChange={(key) => { setActiveKey(key as PurchaseType) }}>
@@ -106,7 +107,7 @@ const PurchaseManipulatePage: React.FC = () => {
         </div>
       </PageContainer>
 
-      <AddOrder cb={addCb} />
+      <AddOrder cb={addCb} setActiveKey={setActiveKey}/>
       <DetailModal />
       <ArrangeModal open={open} setOpen={setOpen} dateName="送达仓库日期" personName="采购员" personType={ROLE.collector} cb={collect} title="采购分派"/>
     </>

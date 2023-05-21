@@ -50,7 +50,7 @@ export const useColumns= () => {
                 >
                     {activeKey === PurchaseType.finish ? '再来一单' : '修改'}
                 </a>
-                <Divider type="vertical" />
+                {/* <Divider type="vertical" /> */}
             </>
         ),
     },

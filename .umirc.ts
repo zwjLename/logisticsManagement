@@ -38,14 +38,16 @@ export default defineConfig({
         path: 'vehicleMonitor',
         name: '车辆分布',
         component: './Monitor/VehicleMonitor'
-      }, {
-        path: 'carbinMonitor',
-        name: '车厢监控',
-        component: './Monitor/CarbinMonitor'
-      }, {
+      },
+      // {
+      //   path: 'carbinMonitor',
+      //   name: '车厢监控',
+      //   component: './Monitor/CarbinMonitor'
+      // },
+      {
         path: 'trackMonitor',
         name: '定位跟踪',
-        component: 'Monitor/TrackMonitor'
+        component: './Monitor/TrackMonitor'
       }]
     },
     {
@@ -69,12 +71,24 @@ export default defineConfig({
       name: '数据眼',
       path: '/dataeye',
       routes: [{
+        path: 'allOrders',
+        name: '所有订单',
+        component: './DataEye/AllOrders'
+      },{
+        path: 'deliverTask',
+        name: '配送任务',
+        component: './DataEye/DeliverTask'
+      }, {
         path: 'vehicleData',
-        name: '车辆分布',
+        name: '车辆轨迹',
         component: './DataEye/VehicleData'
       }, {
+        path: 'carbinEnv',
+        name: '车厢环境',
+        component: './DataEye/CarbinEnv'
+      }, {
         path: 'carbinData',
-        name: '车厢监控',
+        name: '告警历史',
         component: './DataEye/CarbinData'
       }]
     },
@@ -96,7 +110,7 @@ export default defineConfig({
         }, {
           path: 'terminal',
           name: '终端',
-          component: './Config/Client'
+          component: './Config/Terminal'
         }]
         // component: './Table',
     },
@@ -104,9 +118,10 @@ export default defineConfig({
   npmClient: 'pnpm',
   proxy: {
     '/micro-vehicles-test': proxyContent,
+    '/authority': proxyContent,
     '/auth': proxyContent
   },
-  plugins: [require.resolve("@umijs/max-plugin-openapi")],
+  plugins: [require.resolve("@umijs/max-plugin-openapi")], // './src/plugins/mapplugin.ts'
   openAPI: {
     requestLibPath: "import { request } from '@umijs/max'",
     // 这里使用服务端提供的url

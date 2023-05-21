@@ -67,6 +67,21 @@ export async function gatherOrdersUsingGET(
   });
 }
 
+/** 获取所有订单列表。 GET /order/getAllOrderList */
+export async function getAllOrderListUsingGET(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getAllOrderListUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultMapStringObject_>('/order/getAllOrderList', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 获取历史订单列表。最后一列操作包含‘再来一单’ GET /order/getfinishOrderList */
 export async function getfinishOrderListUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)

@@ -46,10 +46,10 @@ declare namespace API {
     /** 格式为yyyy-MM-dd,非必填项 */
     birthDate?: string;
     /** 驾驶证号 */
-    licenseNum: string;
+    licenseNum?: string;
     /** 驾驶车型 */
-    vehicleType: string;
-    /** 用户角色，ROLE_DRIVER---司机；ROLE_COLLECTOR---采购员 */
+    vehicleType?: string;
+    /** 用户角色，ROLE_DRIVER---司机；ROLE_COLLECTOR---采购员；ROLE_ADMIN---管理员 */
     role: string;
   };
 
@@ -103,7 +103,7 @@ declare namespace API {
     Authorization?: string;
     /** 终端SIM卡号 */
     terminalMobile: string;
-    /** 传感器类别 */
+    /** 传感器类别，TEMP_HUMI表示温湿度一体，DO_DISOXY表示DO溶解氧，CO2表示二氧化碳 */
     type: string;
     /** 地址为16进制，例如01、02 */
     hexAddress: string;
@@ -183,6 +183,19 @@ declare namespace API {
     vehicleNum?: string;
   };
 
+  type DriverIncludeVehicleDto = {
+    belongUserId?: number;
+    birthDay?: string;
+    id?: string;
+    licenseNum?: string;
+    name?: string;
+    role?: string;
+    sex?: string;
+    tel?: string;
+    vehicleNum?: string;
+    vehicleType?: string;
+  };
+
   type DriverInfo = {
     belongUserId?: number;
     birthDay?: string;
@@ -231,7 +244,7 @@ declare namespace API {
     Authorization?: string;
     /** 传感器id */
     sensorId: string;
-    /** 传感器类别 */
+    /** 传感器类别，TEMP_HUMI表示温湿度一体，DO_DISOXY表示DO溶解氧，CO2表示二氧化碳 */
     type: string;
     /** 地址为16进制，例如01、02 */
     hexAddress: string;
@@ -254,7 +267,7 @@ declare namespace API {
     licenseNum: string;
     /** 驾驶车型 */
     vehicleType: string;
-    /** 用户角色，ROLE_DRIVER---司机；ROLE_COLLECTOR---采购员员；ROLE_LOADER---配货员 */
+    /** 用户角色，ROLE_DRIVER---司机；ROLE_COLLECTOR---采购员员；ROLE_ADMIN---二级管理员 */
     role: string;
   };
 
@@ -321,6 +334,10 @@ declare namespace API {
     Authorization?: string;
     /** 物流企业管理员id */
     userId: number;
+    /** 车牌 */
+    vehicleNumber?: string;
+    /** 配送日期，默认格式yyyy-MM-dd。车牌与配送日期至少选择一个组成组合条件搜索，车牌与配送日期两个参数都没有则搜索所有订单 */
+    distributeDateStr?: string;
     /** 获取第几页数据，默认为1，表示获取第1页数据,非必填项 */
     page?: number;
     /** 每页显示的条数,默认为10，非必填项 */
@@ -332,6 +349,17 @@ declare namespace API {
     Authorization?: string;
     /** 物流企业管理员id */
     userId: number;
+  };
+
+  type getAllOrderListUsingGETParams = {
+    /** 该参数值（value='Bearer {token}'）在request header中 */
+    Authorization?: string;
+    /** 物流企业管理员id */
+    userId: number;
+    /** 获取第几页数据，默认为1，表示获取第1页数据,非必填项 */
+    page?: number;
+    /** 每页显示的条数,默认为10，非必填项 */
+    pageSize?: number;
   };
 
   type getAllStaffsUsingGETParams = {
@@ -357,13 +385,6 @@ declare namespace API {
     page?: number;
     /** pageSize */
     pageSize?: number;
-    /** 该参数值（value='Bearer {token}'）在request header中 */
-    Authorization?: string;
-  };
-
-  type getAllVehicleByUserUsingGETParams = {
-    /** userId */
-    userId: number;
     /** 该参数值（value='Bearer {token}'）在request header中 */
     Authorization?: string;
   };
@@ -395,6 +416,13 @@ declare namespace API {
     page?: number;
     /** pageSize */
     pageSize?: number;
+    /** 该参数值（value='Bearer {token}'）在request header中 */
+    Authorization?: string;
+  };
+
+  type getBindTerminalInfoByVehicleIdUsingGETParams = {
+    /** vehicleNum */
+    vehicleNum: string;
     /** 该参数值（value='Bearer {token}'）在request header中 */
     Authorization?: string;
   };
@@ -449,6 +477,17 @@ declare namespace API {
     pageSize?: number;
   };
 
+  type getHistoryTraceDateListUsingGETParams = {
+    /** 该参数值（value='Bearer {token}'）在request header中 */
+    Authorization?: string;
+    /** 终端中的sim卡号 */
+    terminalMobile: string;
+    /** 默认格式yyyy-MM-dd HH:mm:ss */
+    startTime: string;
+    /** 默认格式yyyy-MM-dd HH:mm:ss */
+    endTime: string;
+  };
+
   type getHistoryTraceUsingGETParams = {
     /** 该参数值（value='Bearer {token}'）在request header中 */
     Authorization?: string;
@@ -501,6 +540,17 @@ declare namespace API {
     Authorization?: string;
     /** 终端SIM卡号,不足12位第1位补0 */
     terminalMobile: string;
+  };
+
+  type getTempHumiDateListUsingGETParams = {
+    /** 该参数值（value='Bearer {token}'）在request header中 */
+    Authorization?: string;
+    /** 终端SIM卡号,不足12位第1位补0 */
+    terminalMobile: string;
+    /** 默认格式yyyy-MM-dd HH:mm:ss */
+    startTime: string;
+    /** 默认格式yyyy-MM-dd HH:mm:ss */
+    endTime: string;
   };
 
   type getTempHumiForTimeUsingGETParams = {
@@ -621,7 +671,7 @@ declare namespace API {
     vehicleType: string;
     /** 车牌 */
     licensePlateNumber?: string;
-    /** licensePlateColor */
+    /** 车牌颜色,数字1代表蓝色，2代表黄色，3代表黑色，4代表白色，5代表其他 */
     licensePlateColor?: number;
     /** 车辆载重，单位默认为kg */
     load?: number;
@@ -888,6 +938,18 @@ declare namespace API {
     msg?: string;
   };
 
+  type ResultListDate_ = {
+    code?: number;
+    data?: string[];
+    msg?: string;
+  };
+
+  type ResultListDriverIncludeVehicleDto_ = {
+    code?: number;
+    data?: DriverIncludeVehicleDto[];
+    msg?: string;
+  };
+
   type ResultListDriverInfo_ = {
     code?: number;
     data?: DriverInfo[];
@@ -963,6 +1025,12 @@ declare namespace API {
   type ResultMapStringObject_ = {
     code?: number;
     data?: Record<string, any>;
+    msg?: string;
+  };
+
+  type ResultString_ = {
+    code?: number;
+    data?: string;
     msg?: string;
   };
 

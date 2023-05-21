@@ -1,10 +1,10 @@
 import { ProTable, PageContainer, ActionType } from '@ant-design/pro-components';
 import { useModel, useRequest } from "@umijs/max";
-import { Button, DatePicker, Form, Input, Modal, Popconfirm, Radio } from "antd";
+import { Button, Form, Input, Modal, Popconfirm } from "antd";
 import { useRef, useState, useEffect } from "react";
-import { addStaffUsingPOST, deleteStaffUsingDELETE, editStaffUsingPOST, getAllStaffsUsingGET } from "@/services/logosticsmanagement/sijiguanlijiekou";
-import { DateFormat, noticeFunc } from "@/utils/format";
-import dayjs from "dayjs";
+import { noticeFunc } from "@/utils/format";
+import { deleteVehicleUsingDELETE, editVehicleUsingPOST, getAllVehiclesUsingGET, joinSysUsingPOST } from '@/services/logosticsmanagement/cheliangguanlijiekou';
+import { VehicleState, VehicleStateWord } from '../const';
 
 export default function ConfigClient() {
     const [form] = Form.useForm();
@@ -15,13 +15,17 @@ export default function ConfigClient() {
     const [loading, setLoading] = useState(false);
     const [edit, setEdit] = useState('');
 
-    const memberRes = useRequest(getAllStaffsUsingGET, {
+    const res = useRequest(getAllVehiclesUsingGET, {
+
         manual: true,
     });
     const getList = async () => {
-        await memberRes.run({
+        const data = await res.run({
             userId: user?.userId,
         });
+        return {
+            data
+        }
     }
     const editFunc = (record: API.DriverInfo) => {
         setEdit(record.id as string)
@@ -29,32 +33,32 @@ export default function ConfigClient() {
         form.setFieldsValue(record)
     }
     const deleteFunc = async (record: API.DriverInfo) => {
-        await deleteStaffUsingDELETE({
-            id: record.id as string
+        await deleteVehicleUsingDELETE({
+            id: Number(record.id)
         });
         noticeFunc('success', { title: ' 删除成功' });
         getList()
     }
     const columns = [{
-        title: '姓名',
-        dataIndex: 'name'
-    }, {
-        title: '联系电话',
-        dataIndex: 'tel'
-    }, {
-        title: '驾驶证号',
-        dataIndex: 'licenseNum'
+        title: '车牌',
+        dataIndex: 'licensePlateNumber'
     }, {
         title: '驾驶车型',
         dataIndex: 'vehicleType'
     }, {
-        title: '性别',
-        dataIndex: 'sex',
-        formRender: <Radio.Group><Radio value={'男'}>男</Radio><Radio value={'女'}>女</Radio></Radio.Group>
+        title: '车载重量/kg',
+        dataIndex: 'loadWeight'
     }, {
-        title: '生日',
-        dataIndex: 'birthDay',
-        formRender: <DatePicker format={DateFormat} className='w100per' />
+        title: '绑定的车载终端号',
+        dataIndex: 'terminalMobile',
+        render: (text: any) => text ? text : '未绑定终端'
+    }, {
+        title: '状态',
+        dataIndex: 'state',
+        render: (state: VehicleState) => VehicleStateWord[state] || '无终端'
+    }, {
+        title: '颜色',
+        dataIndex: 'licensePlateColor'
     }, {
         title: '操作',
         dataIndex: 'operate',
@@ -67,31 +71,34 @@ export default function ConfigClient() {
         if (user?.userId) {
             getList()
         }
-    }, [ user?.userId])
+    }, [user?.userId])
     const submit = async () => {
         await form.validateFields();
         setLoading(true)
         const value = form.getFieldsValue();
-        const func = edit ? editStaffUsingPOST : addStaffUsingPOST;
+        const func = edit ? editVehicleUsingPOST : joinSysUsingPOST;
         const editId = edit ? { id: edit } : {};
-        await func({ ...value, userId: user.userId,  birthDay: value.birthDay ? dayjs(value.birthDay).format(DateFormat) : undefined, ...editId })
+        await func({ ...value, userId: user.userId, load: value.loadWeight, ...editId, coldStorageFlag: false })
         setLoading(false);
         setVisible(false);
         getList()
     }
 
+
+
     return <PageContainer >
         <ProTable
-            loading={memberRes.loading}
+            loading={res.loading}
             actionRef={actionRef}
             rowKey="id"
             search={false}
-            dataSource={memberRes.data || []}
             columns={columns}
-            toolBarRender={() => [<Button type="primary" key="primary" onClick={() => { setVisible(true) }} loading={loading}>创建</Button>]} />
-        <Modal title={edit ? "编辑" : "创建"} open={visible} onCancel={() => setVisible(false)} onOk={submit}>
-            <Form labelCol={{ span: 5 }} form={form}>
-                {columns.map((ele, index) => <Form.Item key={ele.dataIndex} label={ele.title} name={ele.dataIndex} rules={index < 2 ? [{ required: true, message: `请输入${ele.title}` }] : []}>{ele.formRender ? ele.formRender : <Input />}</Form.Item>)}
+            dataSource={res.data}
+            request={getList}
+            toolBarRender={() => [<Button type="primary" key="primary" onClick={() => { setEdit(''); setVisible(true); form.resetFields(); }} loading={!visible && loading}>创建</Button>]} />
+        <Modal title={edit ? "编辑" : "创建"} open={visible} onCancel={() => setVisible(false)} onOk={submit} confirmLoading={visible && loading}>
+            <Form labelCol={{ span: 7 }} form={form}>
+                {columns.slice(0, -1).map((ele, index) => <Form.Item key={ele.dataIndex} label={ele.title} name={ele.dataIndex} rules={index < 3 ? [{ required: true, message: `请输入${ele.title}` }] : []}>{ele.formRender ? ele.formRender : <Input />}</Form.Item>)}
             </Form>
         </Modal>
     </PageContainer>

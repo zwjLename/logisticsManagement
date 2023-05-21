@@ -32,7 +32,7 @@ export async function allocatePickUpInfoUsingPOST(
   });
 }
 
-/** 显示所有的配送任务 GET /distribute/getAllDistributionList */
+/** 显示所有的配送任务,包含条件搜索配送任务 GET /distribute/getAllDistributionList */
 export async function getAllDistributionListUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getAllDistributionListUsingGETParams,

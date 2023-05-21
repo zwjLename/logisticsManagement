@@ -205,6 +205,21 @@ export async function getHistoryTraceUsingGET(
   });
 }
 
+/** 根据终端号获取具有行驶轨迹的车辆日期列表 GET /terminal/getHistoryTraceDateList */
+export async function getHistoryTraceDateListUsingGET(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getHistoryTraceDateListUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultListDate_>('/terminal/getHistoryTraceDateList', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 获取终端绑定的传感器列表 GET /terminal/getSensorList */
 export async function getSensorListUsingGET(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
@@ -212,6 +227,21 @@ export async function getSensorListUsingGET(
   options?: { [key: string]: any },
 ) {
   return request<API.Result>('/terminal/getSensorList', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 获取终端有温度、湿度、水温、溶解氧的日期列表 GET /terminal/getTempHumiDateList */
+export async function getTempHumiDateListUsingGET(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getTempHumiDateListUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultListDate_>('/terminal/getTempHumiDateList', {
     method: 'GET',
     params: {
       ...params,

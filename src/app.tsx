@@ -36,7 +36,8 @@ export const layout: RunTimeLayoutConfig = () => {
       src: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
       size: 'small',
       title: userName,
-      render: (props, dom) => {
+      render: (props: any, dom: any) => {
+        console.log("...")
         return (
           <Dropdown
             menu={{
@@ -64,7 +65,6 @@ export const layout: RunTimeLayoutConfig = () => {
 
 export const request: RequestConfig = {
   timeout: 10000,
-  headers: ls.get(`${System}-token`) ? { Authorization: ls.get(`${System}-token`) } : {},
   paramsSerializer(params: Record<string, any>) {
      return queryString.stringify(params);
   },
@@ -74,10 +74,17 @@ export const request: RequestConfig = {
     errorThrower() {
     }
   },
-  requestInterceptors: [(config: RequestConfig) => {
+  requestInterceptors: [(config: any) => {
+    // console.log("...header",config.headers.common)
+    if (ls.get(`${System}-token`) && !window.location.pathname.includes('/login') && !window.location.pathname.includes('/registry')) {
+      config.headers['Authorization'] = ls.get(`${System}-token`)
+    } else {
+      delete config.headers.Authorization
+    }
+    // TODO 暂时把视屏的切到micro-vehicles
     return {
       ...config,
-      url: config.url.includes('/auth/') ? config.url : `/micro-vehicles-test${config.url}`,
+      url: config.url.includes('/auth/') ? config.url : config.url.includes('/request') ? `/micro-vehicles${config.url}` :  config.url.includes('/admin/add') ? `/authority${config.url}` : `/micro-vehicles-test${config.url}`,
      
     }
   }],

@@ -14,13 +14,17 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@ant-design/pro-components": "^2.0.1",
+    "@ant-design/plots": "^1.2.5",
+    "@ant-design/pro-components": "^2.4.14",
     "@umijs/max": "^4.0.63",
     "@umijs/max-plugin-openapi": "^2.0.3",
     "antd": "^5.0.0",
     "dayjs": "^1.11.7",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "query-string": "^8.1.0",
+    "react-amap": "^1.2.8",
+    "react-countup": "^6.4.2",
     "store": "^2.0.12"
   },
   "devDependencies": {
