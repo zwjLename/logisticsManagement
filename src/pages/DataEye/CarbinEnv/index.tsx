@@ -120,7 +120,7 @@ setConfigDate(dateConfig)
     if (url.charAt(url.length - 1) === "&" || url.charAt(url.length - 1) === "？") {
       url = url.slice(0, url.length - 1);
     }
-    console.log("..url", `https://www.njzhny.com:8443/micro-vehicles/terminal/exportTmpHmiList?${url}`)
+    // console.log("..url", `https://www.njzhny.com:8443/micro-vehicles/terminal/exportTmpHmiList?${url}`)
     window.location.href = `https://www.njzhny.com:8443/micro-vehicles/terminal/exportTmpHmiList?${url}`
 
   }

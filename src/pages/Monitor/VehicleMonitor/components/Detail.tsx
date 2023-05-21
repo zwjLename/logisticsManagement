@@ -41,7 +41,6 @@ export const Detail = memo(({ visible, setVisible, terminalMobile }: any) => {
             })
         }
     }, [visible, terminalMobile])
-    console.log('%c [ visible ]-5', 'font-size:13px; background:pink; color:#bf2c9f;', tempHumiRes?.data)
 
     useEffect(() => {
         let config: any = {};
@@ -118,7 +117,6 @@ export const Detail = memo(({ visible, setVisible, terminalMobile }: any) => {
 
     const mixCom = useCallback((type: CarbinStatusType) => {
         const data = configSeries[type] || [];
-        console.log('%c [ data ]-114', 'font-size:13px; background:pink; color:#bf2c9f;', data)
         const date = configDate[type] || [];
 
         if (type === 'TEMP_HUMI' || type === 'DO_DISOXY') {

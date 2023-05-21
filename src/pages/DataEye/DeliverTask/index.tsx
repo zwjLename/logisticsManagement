@@ -45,7 +45,6 @@ const DeliverTaskPage: React.FC = () => {
             pageSize,
             ...searchParams
         });
-        console.log(res);
         return {
             data: res.data?.list || [],
             total: res.data?.pageNum

@@ -109,7 +109,6 @@ const VehicleMonitorPage: React.FC = () => {
   const infoContent = useMemo(() => {
     if (!visible) return
     const { coldStorageFlag, licensePlateNumber, loadWeight, state, vehicleType } = content;
-    console.log('%c [ content ]-110', 'font-size:13px; background:pink; color:#bf2c9f;', content)
     const { longitude = 0, latitude = 0 } = infoPosition;
     const result = <Row><Col span={8} >车牌:</Col><Col span={16} >{licensePlateNumber}</Col><Col span={8}>车型:</Col><Col span={16}>{vehicleType}</Col><Col span={8}>载重:</Col><Col span={16}>{loadWeight}kg</Col><Col span={9}>是否带冷藏装置:</Col><Col span={15}>{coldStorageFlag}</Col><Col span={8}>在线状态:</Col><Col span={16}>{VehicleStateWord[state]}</Col><Col span={8}>经纬度:</Col><Col span={16}>{longitude.toFixed(1)}, {latitude.toFixed(1)}</Col><Col><Button disabled={state !== VehicleState.online} onClick={() => {
       setDetailVisible(true)

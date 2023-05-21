@@ -118,6 +118,7 @@ export default defineConfig({
   npmClient: 'pnpm',
   proxy: {
     '/micro-vehicles-test': proxyContent,
+    '/micro-vehicles': proxyContent,
     '/authority': proxyContent,
     '/auth': proxyContent
   },

@@ -20,7 +20,6 @@ const DeliverManipulatePage: React.FC = () => {
     const res = await waitDeliveryOrderListUsingGET({
       userId: user.userId,
     });
-    console.log(res);
     return {
       data: res.data || []
     }

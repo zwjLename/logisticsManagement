@@ -35,8 +35,6 @@ const VehicleDataPage: React.FC = () => {
       })
     }
   }, [terminalMobile, range]);
-  console.log(orbitRes.data)
-
   useEffect(() => {
     // if (isFunction(ref.current?.clearMap)) {
     //   console.log("...")
@@ -51,7 +49,7 @@ const VehicleDataPage: React.FC = () => {
         const position = calLocation({ longitude, latitude });
         return position;
       });
-      console.log('allpos...',pos)
+      // console.log('allpos...',pos)
       if (pos.length) {
         const { longitude, latitude } = pos[0];
         setCenter([longitude, latitude]);

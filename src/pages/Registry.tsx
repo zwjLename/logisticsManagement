@@ -24,7 +24,6 @@ export default () => {
             return;
         }
         const { data, code } = await request('/auth/signup',{ data: { password, username, tel }});
-        console.log('%c [ data ]-25', 'font-size:13px; background:pink; color:#bf2c9f;', data)
         if (code === SUCCESS_CODE) {
             noticeFunc('success', {title: '注册成功！去登录'});
             history.push('/login')

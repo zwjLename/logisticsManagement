@@ -20,6 +20,7 @@
     "@umijs/max-plugin-openapi": "^2.0.3",
     "antd": "^5.0.0",
     "dayjs": "^1.11.7",
+    "flv.js": "^1.6.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "query-string": "^8.1.0",

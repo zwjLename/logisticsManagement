@@ -22,7 +22,6 @@ export const AddOrder = ({ cb, setActiveKey }: Props) => {
     const [list, setList] = useState<API.ConsumerAddress[]>([]);
     const [selectItem, setSelectItem] = useState<API.ConsumerAddress>({});
     const [hopeRcvTime, setHopeRcvTime] = useState(dayjs().format(DateFormat));
-    console.log('%c [ dayjs().format(DateFormat) ]-24', 'font-size:13px; background:pink; color:#bf2c9f;', dayjs().format(DateFormat))
     const getClientList = async () => {
         if (user.userId) {
             const listData = await getAllAddressUsingGET({ userId: user.userId });

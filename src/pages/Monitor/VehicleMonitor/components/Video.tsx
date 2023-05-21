@@ -1,23 +1,57 @@
 import { realTimeVideoControlUsingPOST, realTimeVideoRequestUsingPOST, replayRequestUsingPOST, replayRequestUsingPOST1 } from '@/services/logosticsmanagement/zhongduantongxinguanliApi';
 import { useRequest } from '@umijs/max';
-import { Col, DatePicker, Radio, Row, Select, Tabs } from 'antd'
-import React, { memo, useState, useEffect, useMemo } from 'react';
+import { Col, DatePicker, Radio, Row, Select, Spin, Tabs } from 'antd'
+import React, { memo, useState, useEffect, useMemo, useRef } from 'react';
 import moment from 'moment';
+import FlvJs from 'flv.js';
 
 const { RangePicker } = DatePicker;
+const VideoUrl = "https://www.njzhny.com/video/video"
+// const VideoUrl = "https://www.njzhny.com/video/live.flv"
 export const VideoComponent = memo(({ terminalMobile, visible, state }: any) => {
     const [activekey, setActiveKey] = useState('1');
     const [channelNo, setChannelNo] = useState(1);
     const [replayMutiple, setReplayMutiple] = useState(0);
     const [dateRange, setDateRange] = useState([] as string[]);
+    const flvPlayer = useRef<any>();
+    /**
+    	 * 启动flv播放器
+    	 */
+    const openFlvPlayer = (id: string, url: string) => {
+        console.log("视频地址:"+url);
+        const videoElement = document.getElementById(id) as any;
+        console.log('%c [ videoElement ]-21', 'font-size:13px; background:pink; color:#bf2c9f;', videoElement)
+         flvPlayer.current = FlvJs.createPlayer({
+          type: 'flv',
+          url: url,
+          isLive: true,
+          cors: true,
+         }, {
+            enableWorker: false,
+            enableStashBuffer: true,
+            stashInitialSize: 128,
+            autoCleanupSourceBuffer:true
+         });
+          flvPlayer.current.attachMediaElement(videoElement);
+          flvPlayer.current.load();
+          flvPlayer.current.play();
+    }
     const realRes = useRequest(realTimeVideoRequestUsingPOST, {
-        manual: true
+        manual: true,
+        onSuccess: () => {
+            const url = `${VideoUrl}/${terminalMobile}-${channelNo}`;
+            openFlvPlayer('my-video', url)
+        }
     })
     const realCloseRes = useRequest(realTimeVideoControlUsingPOST, {
         manual: true
     })
     const replayRes = useRequest(replayRequestUsingPOST1, {
-        manual: true
+        manual: true,
+        onSuccess: () => {
+            const url = `${VideoUrl}/${terminalMobile}-${channelNo}`;
+            openFlvPlayer('my-video', url)
+        }
     })
     const replayCloseRes = useRequest(replayRequestUsingPOST, {
         manual: true,
@@ -31,8 +65,9 @@ export const VideoComponent = memo(({ terminalMobile, visible, state }: any) => 
             </Col>{activekey === '2' ? <Col span={19}>
             <RangePicker showTime onChange={(e:any) => {
                 if (moment(e[0]).isValid() && moment(e[1]).isValid()) {
-                    const startDate = moment(e[0]).format('YYMMDDHHMMSS');
-                    const endDate = moment(e[1]).format('YYMMDDHHMMSS');
+                    const startDate = e[0].format('YYMMDDHHmmss');
+                    const endDate = e[1].format('YYMMDDHHmmss');
+                    console.log('%c [ endDate ]-70', 'font-size:13px; background:pink; color:#bf2c9f;', startDate, endDate)
                     setDateRange([startDate, endDate])
                 }
                 
@@ -101,10 +136,11 @@ export const VideoComponent = memo(({ terminalMobile, visible, state }: any) => 
                 replayCloseRes.run({
                     terminalMobile,
                     channelNo
-                })
+                });
+                flvPlayer.current.destroy();
             // }
 
         }
     }, [activekey, visible, channelNo, state, dateRange, replayMutiple]);
-    return <Tabs activeKey={activekey} items={items} onChange={onChange} />
+    return <><Tabs activeKey={activekey} items={items} onChange={onChange} /><Spin spinning={realRes.loading}><video id="my-video" style={{height: 'auto', width: '100%'}}></video></Spin></>
 })

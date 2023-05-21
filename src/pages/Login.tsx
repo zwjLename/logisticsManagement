@@ -19,7 +19,6 @@ const {setUser} = useModel('global');
 
    const submit = async (params: {username: string, password: string}) => {
     const {data = {}} = await request('/auth/login',{params, method: 'POST'})
-    console.log('%c [ data ]-18', 'font-size:13px; background:pink; color:#bf2c9f;', data)
     const {username = '', id = 0, token = '', tel = ''} = data;
     setUser({
         userName: username,
