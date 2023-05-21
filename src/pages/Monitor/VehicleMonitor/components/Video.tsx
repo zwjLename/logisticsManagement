@@ -142,5 +142,18 @@ export const VideoComponent = memo(({ terminalMobile, visible, state }: any) => 
 
         }
     }, [activekey, visible, channelNo, state, dateRange, replayMutiple]);
+
+    useEffect(() => {
+        return () => {
+            realCloseRes?.run({
+                terminalMobile,
+                channelNo
+            })
+            replayCloseRes?.run({
+                terminalMobile,
+                channelNo
+            });
+        }
+    }, [])
     return <><Tabs activeKey={activekey} items={items} onChange={onChange} /><Spin spinning={realRes.loading || replayRes.loading}><video id="my-video" style={{height: 'auto', width: '100%'}}></video></Spin></>
 })
