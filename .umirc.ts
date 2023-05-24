@@ -6,6 +6,8 @@ const proxyContent = {
       secure: false,
 }
 export default defineConfig({
+  base: '/vehicle/',
+  publicPath: '/vehicle/',
   antd: {},
   access: {},
   model: {},
