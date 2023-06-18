@@ -183,19 +183,6 @@ declare namespace API {
     vehicleNum?: string;
   };
 
-  type DriverIncludeVehicleDto = {
-    belongUserId?: number;
-    birthDay?: string;
-    id?: string;
-    licenseNum?: string;
-    name?: string;
-    role?: string;
-    sex?: string;
-    tel?: string;
-    vehicleNum?: string;
-    vehicleType?: string;
-  };
-
   type DriverInfo = {
     belongUserId?: number;
     birthDay?: string;
@@ -697,6 +684,13 @@ declare namespace API {
     mailOrderId: string;
   };
 
+  type keepPriceAccountUsingPOSTParams = {
+    /** 订单号列表 */
+    mailOrderIdList?: string[];
+    /** 该参数值（value='Bearer {token}'）在request header中 */
+    Authorization?: string;
+  };
+
   type MailOrder = {
     corporateName?: string;
     endDistributionTime?: string;
@@ -731,6 +725,8 @@ declare namespace API {
     mailOrderId: string;
     /** 将删除的商品id列表 */
     delGoodsIdList?: string[];
+    /** hopeRcvTime */
+    hopeRcvTime?: string;
     /** 该参数值（value='Bearer {token}'）在request header中 */
     Authorization?: string;
   };
@@ -854,6 +850,15 @@ declare namespace API {
     channelNo: number;
   };
 
+  type RecordPriceForGoods = {
+    /** 商品数量 */
+    number?: number;
+    /** 商品重量单位 */
+    unitdesc?: string;
+    /** 商品单价 */
+    unitprice?: number;
+  };
+
   type recvMailOrderUsingPOSTParams = {
     /** 该参数值（value='Bearer {token}'）在request header中 */
     Authorization?: string;
@@ -941,12 +946,6 @@ declare namespace API {
   type ResultListDate_ = {
     code?: number;
     data?: string[];
-    msg?: string;
-  };
-
-  type ResultListDriverIncludeVehicleDto_ = {
-    code?: number;
-    data?: DriverIncludeVehicleDto[];
     msg?: string;
   };
 
@@ -1055,7 +1054,7 @@ declare namespace API {
     Authorization?: string;
     /** 物流企业管理员id */
     userId: number;
-    /** 客户单位,非必填项 */
+    /** 客户单位名称,非必填项 */
     coorporateName?: string;
     /** 默认格式yyyy-MM-dd HH:mm:ss。起止日期必须同时存在或同时没有 */
     startTime?: string;

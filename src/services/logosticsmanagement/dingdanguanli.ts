@@ -112,7 +112,7 @@ export async function getOrderListByCoorporateUsingGET(
   });
 }
 
-/** 会计记账。会计填写订单中每个商品的单价（必填项，市场价每天都会变动）、有可能更新份数（需要复核重量的客户单位例如酒店有可能一些会更改部分商品的斤重，非必填项）。每个商品单价/总价前端显示保留一位小数 POST /order/keepAccount */
+/** 每个订单核算,包括商品id、数量、单价。会计填写订单中每个商品的单价（必填项，市场价每天都会变动）、有可能更新份数（需要复核重量的客户单位例如酒店有可能一些会更改部分商品的斤重，非必填项）。每个商品单价/总价前端显示保留一位小数 POST /order/keepAccount */
 export async function keepAccountUsingPOST(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.keepAccountUsingPOSTParams,
@@ -120,6 +120,26 @@ export async function keepAccountUsingPOST(
   options?: { [key: string]: any },
 ) {
   return request<API.Result>('/order/keepAccount', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    params: {
+      ...params,
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 管理员在汇总商品里面录入每个商品的单价。会计填写订单中每个商品的单价（必填项，市场价每天都会变动）、有可能更新份数（需要复核重量的客户单位例如酒店有可能一些会更改部分商品的斤重，非必填项）。每个商品单价/总价前端显示保留一位小数 POST /order/keepPriceAccount */
+export async function keepPriceAccountUsingPOST(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.keepPriceAccountUsingPOSTParams,
+  body: API.RecordPriceForGoods[],
+  options?: { [key: string]: any },
+) {
+  return request<API.Result>('/order/keepPriceAccount', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -14,7 +14,7 @@ import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from 
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 export async function getInitialState(): Promise<any> {
 
-  return { name: '物流监控平台' };
+  return { name: '智慧冷链物流监控管理平台' };
 
 }
 

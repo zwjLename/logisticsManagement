@@ -94,14 +94,22 @@ const PurchaseManipulatePage: React.FC = () => {
               request={tableRequest}
               columns={columns}
               tableAlertOptionRender={({ selectedRows }) => {
-                return <><Button onClick={() => { setOrderIds(selectedRows.map(ele => ele.id)); setOpen(true) }} >采购分派</Button><Button className="ml10" onClick={() => tableAlertOptionRender(selectedRows)}>查看批量信息</Button></>
+                return activeKey === PurchaseType.ing &&  <><Button onClick={() => { setOrderIds(selectedRows.map(ele => ele.id)); setOpen(true) }} >采购分派</Button><Button className="ml10" onClick={() => tableAlertOptionRender(selectedRows)}>商品汇总</Button></>
               }}
-              rowSelection={{
-                onChange: (_, selectedRows) => {
-                  console.log('%c [ selectedRows ]-49', 'font-size:13px; background:pink; color:#bf2c9f;', selectedRows)
+              {...activeKey === PurchaseType.ing ? {
+                rowSelection: {
+                  onChange: (_, selectedRows) => {
+                    console.log('%c [ selectedRows ]-49', 'font-size:13px; background:pink; color:#bf2c9f;', selectedRows)
+  
+                  },
+                }
+              } : {}}
+              // rowSelection={{
+              //   onChange: (_, selectedRows) => {
+              //     console.log('%c [ selectedRows ]-49', 'font-size:13px; background:pink; color:#bf2c9f;', selectedRows)
 
-                },
-              }}
+              //   },
+              // }}
             />
           </ProCard>
         </div>

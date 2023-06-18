@@ -40,7 +40,7 @@ const {setUser} = useModel('global');
         <div>
             <LoginForm
                 title="登录"
-                subTitle="物流监控平台"
+                subTitle="智慧冷链物流监控管理平台"
                 onFinish={submit}
             >
                 <ProFormText

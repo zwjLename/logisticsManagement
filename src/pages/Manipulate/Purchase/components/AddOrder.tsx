@@ -33,7 +33,8 @@ export const AddOrder = ({ cb, setActiveKey }: Props) => {
         let res;
         if ((activeKey === PurchaseType.ing) && detailVisible) {
             res = await modifyGoodsUsingPOST({
-                mailOrderId: detail.mailOrderId
+                mailOrderId: detail.mailOrderId,
+                hopeRcvTime
             }, goodsInRcvOrderParamList)
         } else {
             res = await recvMailOrderUsingPOST({
@@ -94,7 +95,7 @@ export const AddOrder = ({ cb, setActiveKey }: Props) => {
                 <Col span={4} className='mt10'>商品：</Col>
                 <Col span={20} className='mt10'>
                     <Row>
-                        <Form form={form}>
+                        <Form form={form} className={styles.orderForm}>
                             <Form.List name="goodsInRcvOrderParamList" >{(fields, { add, remove }) => (
                                 <>
                                     {fields.map(({ key, name, ...restField }) => (

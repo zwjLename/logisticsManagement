@@ -6,8 +6,8 @@ export enum VehicleState {
 export const VehicleStateWord = {
     [VehicleState.offline]: '离线',
     [VehicleState.online]: '在线',
-    [VehicleState.null]: '未知',
-    null: '未知'
+    [VehicleState.null]: '无终端',
+    null: '无终端'
 }
 
 export const CarIcon = {

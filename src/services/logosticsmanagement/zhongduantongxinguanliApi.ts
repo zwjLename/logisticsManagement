@@ -390,7 +390,7 @@ export async function unbindSensorUsingPOST(
   });
 }
 
-/** 解除终端与车辆的绑定关系，并删除终端信息 POST /terminal/unbindVehicle */
+/** 删除终端。解除终端与车辆的绑定关系，并删除终端信息 POST /terminal/unbindVehicle */
 export async function unbindVehicleUsingPOST(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.unbindVehicleUsingPOSTParams,

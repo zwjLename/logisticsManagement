@@ -6,8 +6,8 @@ const proxyContent = {
       secure: false,
 }
 export default defineConfig({
-  base: '/vehicle/',
-  publicPath: '/vehicle/',
+  base: './',
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   antd: {},
   access: {},
   model: {},
@@ -15,7 +15,7 @@ export default defineConfig({
   request: {},
   valtio: {},
   layout: {
-    title: '物流监控平台',
+    title: '智慧冷链物流监控管理平台',
   },
   routes: [
     {
@@ -53,7 +53,7 @@ export default defineConfig({
       }]
     },
     {
-      name: '操控台',
+      name: '分派调度',
       path: '/manipulate',
       routes: [{
         path: 'purchase',
@@ -70,7 +70,7 @@ export default defineConfig({
       }]
     },
     {
-      name: '数据眼',
+      name: '数据中心',
       path: '/dataeye',
       routes: [{
         path: 'allOrders',
@@ -95,7 +95,7 @@ export default defineConfig({
       }]
     },
     {
-        name: '配置',
+        name: '配置管理',
         path: '/config',
         routes: [{
           path: 'client',

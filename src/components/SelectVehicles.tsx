@@ -6,7 +6,7 @@ import { useModel } from '@@/plugin-model';
 import { VehicleState, VehicleStateWord } from '@/pages/Config/const';
 
 const SelectVehicle = memo(() => {
-  const { user, terminalMobile, setTerminalMobile, setVehicleNum } = useModel('global');
+  const { user, terminalMobile, setTerminalMobile, setVehicleNum, setVeState, veState } = useModel('global');
  const [loading, setLoading] = useState(true)
     const res = useRequest(getAllVehiclesUsingGET, {
         manual:true,
@@ -31,6 +31,8 @@ const SelectVehicle = memo(() => {
         <Select style={{width: '200px'}} loading={res.loading} value={loading ? undefined : terminalMobile} onChange={(terminalMobile) => {
             setTerminalMobile(terminalMobile)
             setVehicleNum(res.data?.find(ele => ele.terminalMobile === terminalMobile)?.licensePlateNumber || '')
+            const vehicleState = res.data?.find(ele => ele.terminalMobile === terminalMobile)?.state || '';
+            setVeState(vehicleState)
         }}>{selectOption}</Select>
     </>
 })

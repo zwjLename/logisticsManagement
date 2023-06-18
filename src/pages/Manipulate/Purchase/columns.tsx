@@ -2,7 +2,7 @@
 import { Divider } from "antd";
 import { useCallback} from 'react';
 import { useModel } from '@umijs/max';
-import { PurchaseType } from "../typings";
+import { PickupAllocFlag, PurchaseType } from "../typings";
 import { queryOrderDetailByOrderIdUsingGET } from "@/services/logosticsmanagement/dingdanguanli";
 
 export const useColumns= () => {
@@ -36,8 +36,13 @@ export const useColumns= () => {
     }, {
         title: '电话',
         dataIndex: 'revTel'
-    },
-    {
+    }, {
+        title: '分派状态',
+        dataIndex: 'pickupAllocFlag',
+        render: (text: 0|1) => {
+            return PickupAllocFlag[text] || ''
+        }
+    }, {
         title: '操作',
         dataIndex: 'option',
         valueType: 'option',

@@ -7,6 +7,7 @@ import { waitDeliveryOrderListUsingGET } from '@/services/logosticsmanagement/di
 import { ArrangeModal } from '../components/ArrangeModal';
 import { allocateDriverInfoUsingPOST } from '@/services/logosticsmanagement/fenpaidiaoduguanlijiekou';
 import dayjs, { Dayjs } from 'dayjs';
+import { PickupAllocFlag } from '../typings';
 
 const DeliverManipulatePage: React.FC = () => {
   const { user } = useModel('global')
@@ -34,6 +35,11 @@ const DeliverManipulatePage: React.FC = () => {
       title: '目的地',
       dataIndex: 'rcvAddress',
       valueType: 'text',
+    },
+    {
+      title: '分派状态',
+      dataIndex: 'transAllocFlag',
+      render: (text: 0|1) => PickupAllocFlag[text] || ''
     },
     {
       title: '送达日期',

@@ -16,9 +16,10 @@ export enum DisStatus {
     OVER = 'OVER' //关闭
 }
 export const DisStatusWord = {
-    [DisStatus.HAVE_ALLOCATE]: '已分配任务，待配送',
+    [DisStatus.HAVE_ALLOCATE]: '待配送',
     [DisStatus.DISTRIBUTING]: '配送中',
     [DisStatus.DISTRIBUTION_CANCEL]: '取消配送',
     [DisStatus.DISTRIBUTION_END]: '配送完成',
     [DisStatus.OVER]: '关闭'
+
 }

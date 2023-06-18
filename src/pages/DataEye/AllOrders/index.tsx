@@ -6,6 +6,7 @@ import { getAllOrderListUsingGET, queryHmiTmpByIdUsingGET, queryLogisticsByIdUsi
 import { SingleCarbinEnvModal } from '../components/SingleCarbinEnv';
 import { TransportModal } from '../components/TransportModal';
 import { getBindTerminalInfoByVehicleIdUsingGET } from '@/services/logosticsmanagement/cheliangguanlijiekou';
+import { AllOrderStatus } from '../const';
 
 const AllOrdersPage: React.FC = () => {
     const { user } = useModel('global')
@@ -63,7 +64,8 @@ const AllOrdersPage: React.FC = () => {
             dataIndex: 'revTel'
         }, {
             title: '状态',
-            dataIndex: 'mailState'
+            dataIndex: 'mailState',
+            render: (text: keyof typeof  AllOrderStatus) => AllOrderStatus[text]
         }, {
             title: '操作',
             dataIndex: 'operate',
@@ -106,7 +108,7 @@ const AllOrdersPage: React.FC = () => {
             </div>
             <Modal open={transportOpen} title="物流" footer={null} onCancel={() => setTransportOpen(false)} maskClosable={false} destroyOnClose={true}>
                 {/* TODO 去掉mock代码*/}
-                <TransportModal orderStte={transport.data?.orderStte || '未知'} transPositionResultList={transport.data?.transPositionResultList || [{
+                <TransportModal orderStte={transport.data?.orderStte || '无终端'} transPositionResultList={transport.data?.transPositionResultList || [{
                     longitude:
                         118.99771073114343, latitude: 31.501327282679718
                 }, {

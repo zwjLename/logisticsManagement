@@ -6,7 +6,6 @@ import { AllMember, MemberWord, Member } from './types';
 import { addStaffUsingPOST, deleteStaffUsingDELETE, editStaffUsingPOST, getAllStaffsUsingGET } from "@/services/logosticsmanagement/sijiguanlijiekou";
 import { DateFormat, noticeFunc } from "@/utils/format";
 import dayjs from "dayjs";
-import { addUserUsingPOST } from '@/services/logosticsmanagement/user';
 
 export default function ConfigClient() {
     const [form] = Form.useForm();
@@ -84,22 +83,23 @@ export default function ConfigClient() {
             const editId = edit ? { id: edit } : {};
             await func({ ...value, userId: user.userId, role: activeKey, birthDay: value.birthDay ? dayjs(value.birthDay).format(DateFormat) : undefined, ...editId });
             if (activeKey === Member.admin) {
-                await addUserUsingPOST({
-                    userDO: {
-                        "birthDay": "",
-                        "id": 0,
-                        "image": "",
-                        "licenseNum": "",
-                        "register_time": "",
-                        "role": "ROLE_ADMIN",
-                        "sex": "",
-                        "vehicleType": "",
-                        belongUserId: user?.userId,
-                        ...value,
-                        username: value.tel,
-                        password: '123456'
-                    }
-                })
+                // TODO
+                // await addUserUsingPOST({
+                //     userDO: {
+                //         "birthDay": "",
+                //         "id": 0,
+                //         "image": "",
+                //         "licenseNum": "",
+                //         "register_time": "",
+                //         "role": "ROLE_ADMIN",
+                //         "sex": "",
+                //         "vehicleType": "",
+                //         belongUserId: user?.userId,
+                //         ...value,
+                //         username: value.tel,
+                //         password: '123456'
+                //     }
+                // })
             }
         } catch(e){
 

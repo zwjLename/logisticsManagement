@@ -293,7 +293,7 @@ export async function getAllStaffsUsingGET(
   params: API.getAllStaffsUsingGETParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.ResultListDriverIncludeVehicleDto_>('/staff/getAllStaffs', {
+  return request<API.ResultListDriverInfo_>('/staff/getAllStaffs', {
     method: 'GET',
     params: {
       ...params,
