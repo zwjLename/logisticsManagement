@@ -84,7 +84,7 @@ export const request: RequestConfig = {
     // TODO 暂时把视屏的切到micro-vehicles
     return {
       ...config,
-      url: config.url.includes('/auth/') ? config.url : config.url.includes('/request') || config.url.includes('/control') ? `/micro-vehicles${config.url}` :  config.url.includes('/admin/add') ? `/authority${config.url}` : `/micro-vehicles-test${config.url}`,
+      url: config.url.includes('/auth/') || config.url.includes('/authority/') ? config.url : config.url.includes('/request') || config.url.includes('/control') ? `/micro-vehicles${config.url}` : `/micro-vehicles-test${config.url}`,
      
     }
   }],

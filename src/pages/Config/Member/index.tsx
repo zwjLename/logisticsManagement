@@ -1,5 +1,5 @@
 import { ProTable, PageContainer, ActionType } from '@ant-design/pro-components';
-import { useModel, useRequest } from "@umijs/max";
+import { request, useModel, useRequest } from "@umijs/max";
 import { Button, DatePicker, Form, Input, Modal, Popconfirm, Radio } from "antd";
 import { useRef, useState, useEffect } from "react";
 import { AllMember, MemberWord, Member } from './types';
@@ -14,9 +14,11 @@ export default function ConfigClient() {
     const { user } = useModel('global');
     const [activeKey, setActiveKey] = useState(Member.driver)
     const [visible, setVisible] = useState(false);
+    // const [teropen, setTeropen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [edit, setEdit] = useState('');
 
+    const addUserUsingPOST = (data: any) => request('/authority/admin/add', {method: 'POST', data})
     const memberRes = useRequest(getAllStaffsUsingGET, {
         manual: true,
     });
@@ -83,23 +85,22 @@ export default function ConfigClient() {
             const editId = edit ? { id: edit } : {};
             await func({ ...value, userId: user.userId, role: activeKey, birthDay: value.birthDay ? dayjs(value.birthDay).format(DateFormat) : undefined, ...editId });
             if (activeKey === Member.admin) {
-                // TODO
-                // await addUserUsingPOST({
-                //     userDO: {
-                //         "birthDay": "",
-                //         "id": 0,
-                //         "image": "",
-                //         "licenseNum": "",
-                //         "register_time": "",
-                //         "role": "ROLE_ADMIN",
-                //         "sex": "",
-                //         "vehicleType": "",
-                //         belongUserId: user?.userId,
-                //         ...value,
-                //         username: value.tel,
-                //         password: '123456'
-                //     }
-                // })
+                await addUserUsingPOST({
+                    userDO: {
+                        "birthDay": "",
+                        "id": 0,
+                        "image": "",
+                        "licenseNum": "",
+                        "register_time": "",
+                        "role": "ROLE_ADMIN",
+                        "sex": "",
+                        "vehicleType": "",
+                        belongUserId: user?.userId,
+                        ...value,
+                        username: value.tel,
+                        password: ''
+                    }
+                })
             }
         } catch(e){
 
@@ -126,5 +127,9 @@ export default function ConfigClient() {
                 {columns.map((ele, index) => <Form.Item key={ele.dataIndex} label={ele.title} name={ele.dataIndex} rules={index < 2 ? [{ required: true, message: `请输入${ele.title}` }] : []}>{ele.formRender ? ele.formRender : <Input />}</Form.Item>)}
             </Form>
         </Modal>
+        {/* <Modal title="操作传感器" open={teropen} onCancel={() => setTeropen(false)} onOk={terSubmit}>
+
+
+        </Modal> */}
     </PageContainer>
 }

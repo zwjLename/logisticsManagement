@@ -36,10 +36,7 @@ const VehicleDataPage: React.FC = () => {
     }
   }, [terminalMobile, range]);
   useEffect(() => {
-    // if (isFunction(ref.current?.clearMap)) {
-    //   console.log("...")
-    //   ref.current.clearMap();
-    // }
+   
     if (orbitRes.data?.length) {
       const pos = orbitRes.data?.filter(ele => {
         const { longitude, latitude } = ele;

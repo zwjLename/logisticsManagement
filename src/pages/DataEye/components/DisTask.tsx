@@ -5,6 +5,7 @@ export const DisTaskModal = ({id = ''}: {id: string}) => {
     
 
     const request = async () => {
+        // getTempHumiForTimeUsingGET TODO
        const res = await getOrdersByAllocationIdUsingGET({
         allocationId: id
     })

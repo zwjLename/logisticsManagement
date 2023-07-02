@@ -111,7 +111,7 @@ const TrackMonitorPage: React.FC = () => {
 
   useEffect(()=>{
     return () => {
-       ws.current.close() 
+       ws.current?.close() 
     }
   }, [ws])
 

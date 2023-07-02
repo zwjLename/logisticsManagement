@@ -121,6 +121,12 @@ export const AddOrder = ({ cb, setActiveKey }: Props) => {
                                             >
                                                 <Input placeholder="请填写商品单位" />
                                             </Form.Item>
+                                            <Form.Item
+                                                {...restField}
+                                                name={[name, 'unitprice']}
+                                            >
+                                                <InputNumber placeholder="请填写商品单价" />
+                                            </Form.Item>
                                             <MinusCircleOutlined onClick={() => remove(name)} className={styles.minus} />
                                         </Space>
                                     ))}

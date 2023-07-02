@@ -137,7 +137,7 @@ export const VideoComponent = memo(({ terminalMobile, visible, state }: any) => 
                     terminalMobile,
                     channelNo
                 });
-                flvPlayer.current.destroy();
+                flvPlayer.current?.destroy();
             // }
 
         }
