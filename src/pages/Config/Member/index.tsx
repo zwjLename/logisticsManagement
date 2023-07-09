@@ -98,9 +98,10 @@ export default function ConfigClient() {
                         belongUserId: user?.userId,
                         ...value,
                         username: value.tel,
-                        password: ''
+                        password: '123456'
                     }
-                })
+                });
+                noticeFunc('success', {msg: '创建成功'})
             }
         } catch(e){
 

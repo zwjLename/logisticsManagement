@@ -115,22 +115,7 @@ export async function updateVehicleNumParametersUsingPOST(
   });
 }
 
-/** 终端绑定传感器 POST /terminal/bindSensor */
-export async function bindSensorUsingPOST(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.bindSensorUsingPOSTParams,
-  options?: { [key: string]: any },
-) {
-  return request<API.Result>('/terminal/bindSensor', {
-    method: 'POST',
-    params: {
-      ...params,
-    },
-    ...(options || {}),
-  });
-}
-
-/** 编辑传感器 POST /terminal/editSensor */
+/** 编辑传感器或终端绑定传感器，根据sensorId是否为空进行判定 POST /terminal/editSensor */
 export async function editSensorUsingPOST(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.editSensorUsingPOSTParams,
@@ -211,7 +196,7 @@ export async function getHistoryTraceDateListUsingGET(
   params: API.getHistoryTraceDateListUsingGETParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.ResultListDate_>('/terminal/getHistoryTraceDateList', {
+  return request<API.ResultListString_>('/terminal/getHistoryTraceDateList', {
     method: 'GET',
     params: {
       ...params,
@@ -241,7 +226,7 @@ export async function getTempHumiDateListUsingGET(
   params: API.getTempHumiDateListUsingGETParams,
   options?: { [key: string]: any },
 ) {
-  return request<API.ResultListDate_>('/terminal/getTempHumiDateList', {
+  return request<API.ResultListString_>('/terminal/getTempHumiDateList', {
     method: 'GET',
     params: {
       ...params,

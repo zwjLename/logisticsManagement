@@ -98,17 +98,6 @@ declare namespace API {
     userId?: number;
   };
 
-  type bindSensorUsingPOSTParams = {
-    /** 该参数值（value='Bearer {token}'）在request header中 */
-    Authorization?: string;
-    /** 终端SIM卡号 */
-    terminalMobile: string;
-    /** 传感器类别，TEMP_HUMI表示温湿度一体，DO_DISOXY表示DO溶解氧，CO2表示二氧化碳 */
-    type: string;
-    /** 地址为16进制，例如01、02 */
-    hexAddress: string;
-  };
-
   type ByteBuf = {
     direct?: boolean;
     readOnly?: boolean;
@@ -227,10 +216,12 @@ declare namespace API {
   };
 
   type editSensorUsingPOSTParams = {
+    /** terminalMobile */
+    terminalMobile: string;
     /** 该参数值（value='Bearer {token}'）在request header中 */
     Authorization?: string;
     /** 传感器id */
-    sensorId: string;
+    sensorId?: string;
     /** 传感器类别，TEMP_HUMI表示温湿度一体，DO_DISOXY表示DO溶解氧，CO2表示二氧化碳 */
     type: string;
     /** 地址为16进制，例如01、02 */
@@ -725,6 +716,8 @@ declare namespace API {
     mailOrderId: string;
     /** 将删除的商品id列表 */
     delGoodsIdList?: string[];
+    /** unitprice */
+    unitprice?: number;
     /** hopeRcvTime */
     hopeRcvTime?: string;
     /** 该参数值（value='Bearer {token}'）在request header中 */
@@ -943,12 +936,6 @@ declare namespace API {
     msg?: string;
   };
 
-  type ResultListDate_ = {
-    code?: number;
-    data?: string[];
-    msg?: string;
-  };
-
   type ResultListDriverInfo_ = {
     code?: number;
     data?: DriverInfo[];
@@ -988,6 +975,12 @@ declare namespace API {
   type ResultListRetSensor_ = {
     code?: number;
     data?: RetSensor[];
+    msg?: string;
+  };
+
+  type ResultListString_ = {
+    code?: number;
+    data?: string[];
     msg?: string;
   };
 

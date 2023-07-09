@@ -18,6 +18,7 @@ const CarbinEnvPage: React.FC = () => {
   const [configSeries, setConfigSeries] = useState<any>({});
   const [configDate, setConfigDate] = useState<any>({});
 
+  
   const onChange = (e: any) => {
     setRange([
       dayjs(e[0]).format(MinuteDateFormat),
